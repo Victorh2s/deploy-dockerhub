@@ -35,4 +35,4 @@ jobs:
         run: docker pull ${{ secrets.DOCKER_USER }}/deploy-dockerhub:latest
 
       - name: Docker Run
-        run: docker run -d -p 80:80 --name deploy-dockerhub:latest ${{ secrets.DOCKER_USER }}/deploy-dockerhub
+        run: docker run -d -p 80:80 -e PORT=${{ secrets.PORT }} --name deploy-dockerhub:latest ${{ secrets.DOCKER_USER }}/deploy-dockerhub
