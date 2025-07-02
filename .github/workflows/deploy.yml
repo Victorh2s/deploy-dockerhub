@@ -25,4 +25,9 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKER_USER }}/deploy-dockerhub:latest
 
       - name: Docker Run
-        run: sudo docker run -d -p 80:80 -e PORT=${{ secrets.PORT }} --name deploy-dockerhub ${{ secrets.DOCKER_USER }}/deploy-dockerhub
+        run: |
+    
+          sudo docker stop deploy-dockerhub || true
+          sudo docker rm deploy-dockerhub || true
+          
+          sudo docker run -d -p 80:80 -e PORT=${{ secrets.PORT }} --name deploy-dockerhub ${{ secrets.DOCKER_USER }}/deploy-dockerhub
