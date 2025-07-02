@@ -16,7 +16,7 @@ jobs:
         run: sudo docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker Image
-        run: sudo docker build -t ${{ secrets.DOCKER_USER }}/deploy-dockerhub .
+        run: sudo docker build --platform linux/amd64 -t ${{ secrets.DOCKER_USER }}/deploy-dockerhub .
 
       - name: Push Image Docker
         run: sudo docker push ${{ secrets.DOCKER_USER }}/deploy-dockerhub
@@ -25,4 +25,4 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKER_USER }}/deploy-dockerhub:latest
 
       - name: Docker Run
-        run: sudo docker run -d -p 80:80 -e PORT=${{ secrets.PORT }} --name deploy-dockerhub:latest ${{ secrets.DOCKER_USER }}/deploy-dockerhub
+        run: sudo docker run -d -p 80:80 -e PORT=${{ secrets.PORT }} --name deploy-dockerhub ${{ secrets.DOCKER_USER }}/deploy-dockerhub
